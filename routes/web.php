@@ -15,8 +15,21 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home');
-})->name('dashboard')->middleware('auth');
+})->name('home')->middleware('auth');
+
+Route::get('/home', function () {
+    return view('home');
+})->name('home')->middleware('auth');
+
+Route::get('/aluno', function () {
+    return view('aluno');
+})->name('aluno')->middleware('auth');
+
+Route::get('/aluno/novo', function () {
+    return view('form/aluno');
+})->name('aluno/novo')->middleware('auth');
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+

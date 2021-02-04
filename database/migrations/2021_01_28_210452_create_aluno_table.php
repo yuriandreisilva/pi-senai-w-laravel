@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class CreateAlunoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,17 +16,22 @@ class CreateUsersTable extends Migration
         Schema::dropIfExists('aluno');
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('aluno', function (Blueprint $table) {
+
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->date('nascimento');
             $table->rememberToken();
-            $table->timestamps();
 
-            $table->Integer('permissao_usuario')->default('1');
+            $table->unsignedBigInteger('responsavel_id')->index();
+
+            $table->foreign('responsavel_id')->references('id')->on('responsavel');
+
         });
+
     }
 
     /**
@@ -36,6 +41,7 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('aluno');
+
     }
 }
